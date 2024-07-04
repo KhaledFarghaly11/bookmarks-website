@@ -1,14 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
 from .forms import UserEditForm, UserRegistrationForm, ProfileEditForm
 
+def redirect_if_logged_in(view_func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard')  # Redirect to home or any other page
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
 @login_required
 def dashboard(request):
     return render(request, 'account/dashboard.html', {'section': 'dashboard'})
 
+@redirect_if_logged_in
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
