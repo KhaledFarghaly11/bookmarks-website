@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from .models import Profile
 from .forms import UserEditForm, UserRegistrationForm, ProfileEditForm
+
 
 @login_required
 def dashboard(request):
@@ -30,6 +31,9 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, 'Profile has been updated successfully.')
+        else:
+            messages.error(request, 'Error updaing your profile.')
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
