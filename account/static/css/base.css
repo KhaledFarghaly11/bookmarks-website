@@ -75,6 +75,19 @@ ol {
     color:#fff;
 }
 
+.link-button {
+    background: none;
+    border: none;
+    color:#f3f7cc;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+}
+.link-button:hover {
+    color:#fff;
+}
+
 #header .user {
     float:right;
     padding-top:4px;
